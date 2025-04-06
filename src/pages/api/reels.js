@@ -1,5 +1,5 @@
 import { generateCelebrityReel } from "../../lib/generateReel";
-import { uploadToS3, getS3Url } from "../../lib/s3Client";
+// import { uploadToS3, getS3Url } from "../../lib/s3Client";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
