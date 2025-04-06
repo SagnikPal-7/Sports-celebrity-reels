@@ -1,60 +1,37 @@
-"use client";
-
-import { useState, useRef, useEffect } from "react";
-import styles from "./ReelViewer.module.css";
+'use client';
+import { useState, useRef, useEffect } from 'react';
+import styles from './ReelViewer.module.css';
 
 export default function ReelViewer({ initialReels = [] }) {
   const [reels] = useState(initialReels);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const videoRefs = useRef([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Handle scroll/swipe between reels
-  const handleScroll = (e) => {
-    const { scrollTop, clientHeight } = e.target;
-    const newIndex = Math.round(scrollTop / clientHeight);
-
-    if (newIndex !== currentIndex) {
-      // Pause previous video
-      if (videoRefs.current[currentIndex]) {
-        videoRefs.current[currentIndex].pause();
-      }
-
-      // Play new video
-      if (videoRefs.current[newIndex]) {
-        videoRefs.current[newIndex].currentTime = 0;
-        videoRefs.current[newIndex]
-          .play()
-          .catch((e) => console.log("Autoplay prevented:", e));
-      }
-
-      setCurrentIndex(newIndex);
-    }
-  };
-
-  // Auto-play first video on load
+  // Handle video play/pause on scroll
   useEffect(() => {
-    if (videoRefs.current[0]) {
-      videoRefs.current[0]
-        .play()
-        .catch((e) => console.log("Autoplay prevented:", e));
-    }
-  }, []);
+    const handleScroll = () => {
+      const newIndex = Math.round(window.scrollY / window.innerHeight);
+      if (newIndex !== currentIndex) {
+        videoRefs.current[currentIndex]?.pause();
+        videoRefs.current[newIndex]?.play().catch(e => console.log(e));
+        setCurrentIndex(newIndex);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [currentIndex]);
 
   return (
-    <div className={styles.reelContainer} onScroll={handleScroll}>
+    <div className={styles.reelContainer}>
       {reels.map((reel, index) => (
         <div key={reel.id} className={styles.reel}>
-          <video
-            ref={(el) => (videoRefs.current[index] = el)}
-            className={styles.video}
-            loop
-            muted
-            playsInline
-            preload="auto"
-          >
-            <source src={reel.videoUrl} type="video/mp4" />
-          </video>
-
+          {/* Video placeholder - replace with actual video element */}
+          <div className={styles.videoPlaceholder}>
+            <h2>{reel.celebrity}</h2>
+            <p>{reel.stats}</p>
+          </div>
+          
           <div className={styles.overlay}>
             <h3>{reel.celebrity}</h3>
             <p>{reel.script}</p>
