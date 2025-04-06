@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import OpenAI from "openai";
-import AWS from "aws-sdk";
+// import AWS from "aws-sdk";
 
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
 //const polly = new AWS.Polly({ region: "us-east-1" });
