@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import AWS from "aws-sdk";
 
 const openai = new OpenAI(process.env.OPENAI_API_KEY);
-const polly = new AWS.Polly({ region: "us-east-1" });
+//const polly = new AWS.Polly({ region: "us-east-1" });
 
 export async function generateCelebrityReel(celebrityName) {
   // 1. Generate script with GPT
