@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import styles from "./ReelViewer.module.css";
 
 export default function ReelViewer({ initialReels = [] }) {
-  const [reels, setReels] = useState(initialReels);
+  const [reels] = useState(initialReels);
   const [currentIndex, setCurrentIndex] = useState(0);
   const videoRefs = useRef([]);
 
